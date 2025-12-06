@@ -78,14 +78,19 @@ def parse(input_string):
                 print('stack: ', stack)
                 return print("String is not accepted/ invalid.")
             
-            # Epsilon production - just pop, don't push anything
+            # Epsilon production - push to show it, then it gets removed next iteration
             elif rule_rhs == 'ε':
-                pass
+                stack.append('ε')
             
             # Push production onto stack in reverse order
             # reversed() ensures leftmost symbol ends up on top
             else:
                 stack.extend(reversed(rule_rhs))
+        
+        # Handle epsilon - appears briefly then disappears
+        elif stack[-1] == 'ε':
+            print('stack:', stack)
+            stack.pop()  # Remove epsilon immediately
         
         # Error case - top is terminal but doesn't match input
         else:
